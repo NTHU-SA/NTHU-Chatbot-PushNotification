@@ -1,16 +1,29 @@
 import os
+import time
 import requests
 
 url = os.environ['SERVER_URL']
 
 def push_notification(msg):
-    print(f"Pushed: {msg}")
-    return None
-    myobj = {'somekey': 'somevalue'}
-    audience = requests.post(url + "/getBroadcastAudienceIds", data = myobj)
-    print(x.text)
-    pushResult = requests.post(url + "/msg/push", data = myobj)
-    print()
-    x = requests.post(url + "/updateBroadcastTag", data = myobj)
+    print(f"Pushing: {msg}")
+    # return None
+    
+    audience = requests.get(url + "v1/user/getBroadcastAudienceIds")
+    print(audience)
+
+    pushResult = requests.post(url + "v1/msg/push", data = {
+        'to': audience, 
+        'messages': [msg]
+    })
+    print(pushResult)
+
+    ts = int(time.time()) 
+    for uid in audience:
+        upd = requests.post(url + "v1/user/updateBroadcastTag", data = {
+            'userID': uid, 
+            'tag': ts
+        })
+        print(upd)
+
 
     
