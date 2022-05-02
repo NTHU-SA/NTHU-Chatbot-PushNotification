@@ -1,6 +1,8 @@
 import json
-from crawl import crawler
 import os
+from .crawl import crawler
+import time
+import requests
 
 def fetch_messages(**options):
     """Crawl the specific school"""
@@ -16,6 +18,9 @@ def fetch_messages(**options):
 
         for dep, detail in schools[school]["dep"].items():
             for office, link in detail["url"].items():
-                notification = getattr(crawler, school + "_" + dep)(office=office, ta_link=link)
-                content.append(notification)
+                try:
+                    notification = getattr(crawler(), school + "_" + dep)(office=office, ta_link=link)
+                    content.append(notification)
+                except requests.exceptions.RequestException as e:
+                    print(f"Department {dep} has failed. Message: {e}")
     return content

@@ -1,10 +1,9 @@
-import urllib.parse
-
 import requests
 from bs4 import BeautifulSoup
+import urllib.parse
 
 class crawler:
-    def __init__():
+    def __init__(self):
         pass
 
     def nthu_crawler(self, url):

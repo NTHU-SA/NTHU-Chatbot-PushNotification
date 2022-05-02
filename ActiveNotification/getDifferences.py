@@ -1,35 +1,40 @@
 import sqlite3
 import os
 
-con = sqlite3.connect(os.environ['SQLITE_DB'])
-cur = con.cursor()
+class getDifferences:
+    def __init__(self):
+        self.open()
 
-cur.execute("""
-    CREATE TABLE IF NOT EXISTS notifications (
-        school text, dep text, category text, title text, url text
-    )
-""")
-con.commit()
+    def open(self):
+        self.con = sqlite3.connect(os.environ['SQLITE_DB'])
+        self.cur = self.con.cursor()
 
-def exists(content):
-    cur.execute(f"""
-        SELECT 1 FROM notifications
-        WHERE school = :year AND
-        dep = :dep AND
-        category = :category AND
-        title = :title AND
-        url = :url
-    """, content)
-    result = cur.fetchall()
-    cur.commit()
-    return len(result) > 0
+        self.cur.execute("""
+            CREATE TABLE IF NOT EXISTS notifications (
+                school text, dep text, category text, title text, url text
+            )
+        """)
+        self.con.commit()
 
-def insert(content):
-    cur.execute("""
-        INSERT INTO notifications (school, dep, category, title, url) 
-        VALUES (:year, :dep, :category, :title, :url)
-    """, content)
-    con.commit()
+    def exists(self, content):
+        self.cur.execute(f"""
+            SELECT 1 FROM notifications
+            WHERE school = :school AND
+            dep = :dep AND
+            category = :category AND
+            title = :title AND
+            url = :url
+        """, content)
+        result = self.cur.fetchall()
+        self.con.commit()
+        return len(result) > 0
 
-def close():
-    con.close()
+    def insert(self, content):
+        self.cur.execute("""
+            INSERT INTO notifications (school, dep, category, title, url) 
+            VALUES (:school, :dep, :category, :title, :url)
+        """, content)
+        self.con.commit()
+
+    def close(self):
+        self.con.close()
