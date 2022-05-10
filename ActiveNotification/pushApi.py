@@ -23,7 +23,7 @@ def push_notification(msg):
             'userID': uid, 
             'tag': ts
         })
-        print(f"Update result: {pushResult}")
+        print(f"Update result: {upd}")
 
 
 
