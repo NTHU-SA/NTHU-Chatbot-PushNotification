@@ -2,7 +2,7 @@ import os
 import time
 import requests
 
-url = os.environ['SERVER_URL']
+url = "http://" + os.environ['SERVER_URL'] + "/"
 
 def push_notification(msg):
     print(f"Pushing: {msg}")
