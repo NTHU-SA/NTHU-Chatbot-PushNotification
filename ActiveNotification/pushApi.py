@@ -9,13 +9,13 @@ def push_notification(msg):
     # return None
     
     audience = requests.get(url + "v1/user/getBroadcastAudienceIds")
-    print(audience)
+    print(f"Audiences: {audience}")
 
     pushResult = requests.post(url + "v1/msg/push", data = {
         'to': audience, 
         'messages': [msg]
     })
-    print(pushResult)
+    print(f"Result: {pushResult}")
 
     ts = int(time.time()) 
     for uid in audience:
@@ -23,7 +23,8 @@ def push_notification(msg):
             'userID': uid, 
             'tag': ts
         })
-        print(upd)
+        print(f"Update result: {pushResult}")
+
 
 
     
