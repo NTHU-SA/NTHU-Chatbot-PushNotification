@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: push-notification
+  name: push-notification
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: push-notification
+  template:
+    metadata:
+      labels:
+        app: push-notification
+    spec:
+      containers:
+      - image: gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification:latest
+        imagePullPolicy: Always
+        name: nthu-chatbot-push-notification

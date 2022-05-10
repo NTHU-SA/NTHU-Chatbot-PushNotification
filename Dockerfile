@@ -14,4 +14,3 @@ RUN pip3 install -r requirements.txt
 RUN python3 initialize.py
 
 CMD ["python3", "daemon.py"]
-# CMD ["gunicorn", "app:app", "-c", "./gunicorn.conf.py"]
