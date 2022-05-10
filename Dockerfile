@@ -11,6 +11,6 @@ COPY . .
 
 # RUN install sqlite3
 RUN pip3 install -r requirements.txt
-RUN python3 initialize.py
+# RUN python3 initialize.py
 
 CMD ["python3", "daemon.py"]
