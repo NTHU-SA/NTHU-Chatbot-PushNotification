@@ -2,7 +2,7 @@ import os
 import time
 import requests
 
-url = "http://" + os.environ['SERVER_IP'] + "/"
+url = "http://" + os.environ['SERVER_IP'] + ":" + os.environ['SERVER_PORT'] + "/"
 
 def push_notification(msg):
     print(f"Pushing: {msg}")
@@ -10,12 +10,14 @@ def push_notification(msg):
     
     audience = requests.get(url + "api/v1/user/getBroadcastAudienceIds")
     print(f"Audiences: {audience}")
+    audience = audience['result']
 
     pushResult = requests.post(url + "api/v1/msg/push", data = {
         'to': audience, 
         'messages': [msg]
     })
     print(f"Result: {pushResult}")
+    pushResult = pushResult['result']
 
     ts = int(time.time()) 
     for uid in audience:
