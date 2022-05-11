@@ -8,10 +8,10 @@ def push_notification(msg):
     print(f"Pushing: {msg}")
     # return None
     
-    audience = requests.get(url + "v1/user/getBroadcastAudienceIds")
+    audience = requests.get(url + "api/v1/user/getBroadcastAudienceIds")
     print(f"Audiences: {audience}")
 
-    pushResult = requests.post(url + "v1/msg/push", data = {
+    pushResult = requests.post(url + "api/v1/msg/push", data = {
         'to': audience, 
         'messages': [msg]
     })
@@ -19,7 +19,7 @@ def push_notification(msg):
 
     ts = int(time.time()) 
     for uid in audience:
-        upd = requests.post(url + "v1/user/updateBroadcastTag", data = {
+        upd = requests.post(url + "api/v1/user/updateBroadcastTag", data = {
             'userID': uid, 
             'tag': ts
         })
