@@ -2,7 +2,7 @@ FROM python:3.7-buster
 
 WORKDIR /usr/src/app
 
-ENV SERVER_IP=${GINIP}
+ENV SERVER_IP=${NGINXIP}
 ENV SQLITE_DB=./sqlite.db
 ENV LIST_DIRECTORY=./ActiveNotification/
 ENV PERIOD=30
