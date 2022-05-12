@@ -9,7 +9,8 @@ def push_notification(msg):
     # return None
     
     audience = requests.get(url + "api/v1/user/getBroadcastAudienceIds").json()
-    print(f"Audiences: {audience['msg']}")
+    print(f"Audience msg: {audience['msg']}")
+    print(f"Audiences: {audience['result'][:5]}")
     audience = audience['result']
 
     """
