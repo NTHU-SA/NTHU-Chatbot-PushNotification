@@ -13,13 +13,11 @@ def push_notification(msg):
     print(f"Audiences: {audience['result'][:5]}")
     audience = audience['result']
 
-    """
     pushResult = requests.post(url + "api/v1/msg/push", data = {
         'to': audience, 
         'messages': [msg]
     }).json()
-    """
-    pushResult = { 'msg': 'Success', 'result': 'success' }
+    # pushResult = { 'msg': 'Success', 'result': 'success' }
     print(f"Result: {pushResult['msg']}")
     pushResult = pushResult['result']
 
