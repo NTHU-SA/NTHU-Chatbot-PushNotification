@@ -2,28 +2,30 @@ import os
 import time
 import requests
 
-url = os.environ['SERVER_URL']
+url = "http://" + os.environ['SERVER_IP'] + ":" + os.environ['SERVER_PORT'] + "/"
 
 def push_notification(msg):
     print(f"Pushing: {msg}")
     # return None
     
-    audience = requests.get(url + "v1/user/getBroadcastAudienceIds")
-    print(audience)
+    audience = requests.get(url + "api/v1/user/getBroadcastAudienceIds").json()
+    print(f"Audience msg: {audience['msg']}")
+    print(f"Audiences: {audience['result'][:5]}")
+    audience = audience['result']
 
-    pushResult = requests.post(url + "v1/msg/push", data = {
+    pushResult = requests.post(url + "api/v1/msg/push", data = {
         'to': audience, 
         'messages': [msg]
-    })
-    print(pushResult)
+    }).json()
+    # pushResult = { 'msg': 'Success', 'result': 'success' }
+    print(f"Result: {pushResult['msg']}")
+    pushResult = pushResult['result']
 
     ts = int(time.time()) 
     for uid in audience:
-        upd = requests.post(url + "v1/user/updateBroadcastTag", data = {
+        upd = requests.post(url + "api/v1/user/updateBroadcastTag", data = {
             'userID': uid, 
             'tag': ts
-        })
-        print(upd)
-
-
+        }).json()
+        print(f"Update result: {upd['msg']}")
     
