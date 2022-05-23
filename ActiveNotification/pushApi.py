@@ -14,16 +14,16 @@ def push_notification(msg):
     audience = audience['result']
 
     msg = f"{msg['school']} - {msg['dep']} - {msg['category']}：\n{msg['title']}\n{msg['url']}"
-    pushResult = requests.post(url + "api/v1/msg/push", data = {
-        'to': audience, 
-        'messages': [{
-            "type": "text",
-            "text": msg
-        }]
-    }).json()
-    # pushResult = { 'msg': 'Success', 'result': 'success' }
-    print(f"Result: {pushResult['msg']}")
-    pushResult = pushResult['result']
+    for i in range(0, len(audience), 500):
+        payload = {
+            'to': audience[i:i+500], 
+            'messages': [{
+                "type": "text",
+                "text": msg
+            }]
+        }
+        pushResult = requests.post(url + "api/v1/msg/push", json=payload).json()
+        print(f"Result: {pushResult}")
 
     ts = int(time.time()) 
     for uid in audience:
