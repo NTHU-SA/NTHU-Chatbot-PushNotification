@@ -16,7 +16,10 @@ def push_notification(msg):
     msg = f"{msg['school']} - {msg['dep']} - {msg['category']}：\n{msg['title']}\n{msg['url']}"
     pushResult = requests.post(url + "api/v1/msg/push", data = {
         'to': audience, 
-        'messages': [msg]
+        'messages': [{
+            "type": "text",
+            "text": msg
+        }]
     }).json()
     # pushResult = { 'msg': 'Success', 'result': 'success' }
     print(f"Result: {pushResult['msg']}")
